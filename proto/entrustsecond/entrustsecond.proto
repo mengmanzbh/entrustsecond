@@ -1,0 +1,118 @@
+syntax = "proto3";
+package go.micro.api.entrust;
+
+service Entrust {
+  rpc Cancel (Request) returns (Response) {
+  }
+  rpc GetUnfinishedBuyList (Request) returns (Response) {
+  }
+  rpc GetUnfinishedSellList (Request) returns (Response) {
+  }
+  rpc EntrustBuy (Request) returns (Response) {
+  }
+  rpc EntrustSell (Request) returns (Response) {
+  }
+  rpc GetEntrustList (Request) returns (Response) {
+  }
+  rpc InnerBuySecondary (Request) returns (Response) {
+  }
+  rpc InnerSellSecondary (Request) returns (Response) {
+  }
+  rpc InnerCancelSecondary (Request) returns (Response) {
+  }
+  rpc InnerEntrustListSecondary (Request) returns (Response) {
+  }
+  rpc InnerEntrustDetailSecondary(Request) returns (Response) {
+  }
+}
+
+message Pair {
+  string key = 1;
+  repeated string values = 2;
+}
+
+message Request {
+        string method = 1;
+        string path = 2;
+        map<string, Pair> header = 3;
+        map<string, Pair> get = 4;
+        map<string, Pair> post = 5;
+        string body = 6;  // raw request body; if not application/x-www-form-urlencoded
+        string url = 7; // the full url
+}
+
+message Response {
+        int32 statusCode = 1;
+        map<string, Pair> header = 2;
+        string body = 3;
+}
+
+
+message TradeRequest {
+  int32 currency_id = 1;
+  int32 currency_trade_id = 2;
+  double num = 3;
+  double price = 4;
+}
+
+message TradeOrderResponse {
+  repeated TradeOrder orders = 1;
+}
+
+message TradeOrder {
+  int32 orders_id = 1;
+  int32 customer_id = 2;
+  int32 currency_id = 3;
+  int32 currency_trade_id = 4;
+  double price = 5;
+  double num = 6;
+  double trade_num = 7;
+  double fee = 8;
+  string type = 9;
+  string add_time = 10;
+  string trade_time = 11;
+  int32 status = 12;
+  string currency_mark = 13;
+  string currency_trade_mark = 14;
+}
+message UnfinishedRequest {
+  string currency_mark = 1;
+  string currency_trade_mark = 2;
+  int32 limit = 3;
+  int32 offset = 4;
+}
+
+message BusinessRequest {
+  string currency_mark = 1;
+  string currency_trade_mark = 2;
+  double num = 3;
+  double price = 4;
+}
+
+message CurrencyEntrustRequest {
+  string currency_mark = 1;
+  string currency_trade_mark = 2;
+  int32 limit = 3;
+  int32 offset = 4;
+  int32 status = 5;
+}
+
+message CancelRequest {
+  int32 id = 1;
+  string order_no=2;
+}
+
+message InnerRequest {
+  string currency_mark = 1;
+  string currency_trade_mark = 2;
+  double num = 3;
+  double price = 4;
+  int32 cid = 5;
+}
+
+message InnerCancelRequest {
+  int32 id = 1;
+  int32 cid = 2;
+  string order_no=3;
+}
+
